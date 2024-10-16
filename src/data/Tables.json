@@ -1,0 +1,74 @@
+[
+    {
+        "no": "1",
+        "booked": true,
+        "customer_name": "Edbert Lim",
+        "book_time": "10:00"
+    },
+    {
+        "no": "2",
+        "booked": true,
+        "customer_name": "John Doe",
+        "book_time": "10:00"
+    },
+    {
+        "no": "3",
+        "booked": false,
+        "customer_name": "Alice Doe",
+        "book_time": "11:00"
+    },
+    {
+        "no": "4",
+        "booked": false,
+        "customer_name": "Bob Smith",
+        "book_time": "12:00"
+    },
+    {
+        "no": "5",
+        "booked": true,
+        "customer_name": "Charlie Brown",
+        "book_time": "13:00"
+    },
+    {
+        "no": "6",
+        "booked": false,
+        "customer_name": "David Garcia",
+        "book_time": "14:00"
+    },
+    {
+        "no": "7",
+        "booked": true,
+        "customer_name": "Emily Johnson",
+        "book_time": "15:00"
+    },
+    {
+        "no": "8",
+        "booked": false,
+        "customer_name": "Frank Wilson",
+        "book_time": "16:00"
+    },
+    {
+        "no": "9",
+        "booked": true,
+        "customer_name": "Grace Wilcox",
+        "book_time": "17:00"
+    },
+    {
+        "no": "10",
+        "booked": false,
+        "customer_name": "Henry Miller",
+        "book_time": "18:00"
+    },
+    {
+        "no": "11",
+        "booked": false,
+        "customer_name": "Ivy Thompson",
+        "book_time": "19:00"
+    },
+    {
+        "no": "12",
+        "booked": true,
+        "customer_name": "Jack Brown",
+        "book_time": "20:00"
+    }
+]
