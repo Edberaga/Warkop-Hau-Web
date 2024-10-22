@@ -1,6 +1,9 @@
 #root {
   margin: 0 auto;
   text-align: center;
-  padding: 2rem;
   min-height: 100vh;
+}
+
+body {
+  background-color: rgba(250,250,250);
 }
