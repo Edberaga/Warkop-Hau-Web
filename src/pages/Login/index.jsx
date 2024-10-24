@@ -1,10 +1,12 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { useState } from "react";
 import { auth } from "../../firebase"; 
 import { useNavigate } from "react-router-dom";
+
 import logo from '../../assets/images/Logo.webp';
 import './styles.scss';
-import { Button, Card, Container, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +18,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Succesfully Logined")
       navigate('/');
       // User is signed in, redirect or close login modal
     } catch (error) {
