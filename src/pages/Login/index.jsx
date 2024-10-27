@@ -4,7 +4,7 @@ import { useState } from "react";
 import { auth } from "../../firebase"; 
 import { useNavigate } from "react-router-dom";
 
-import logo from '../../assets/images/Logo.webp';
+import logo from '../../assets/images/content/Logo.webp';
 import './styles.scss';
 import { toast } from "react-toastify";
 

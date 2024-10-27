@@ -5,7 +5,7 @@ import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import logo from '../../assets/images/Logo.webp';
+import logo from '../../assets/images/content/Logo.webp';
 import './styles.scss';
 
 const Register = () => {
