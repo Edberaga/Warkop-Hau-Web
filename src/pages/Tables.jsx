@@ -9,6 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { toast } from 'react-toastify';
+import { TimePicker } from 'react-time-picker';
 
 const Card = ({ no, booked, customer_name, book_time, handleBooking, handleCancelBooking, tableUid, currentUserUid }) => {
   const adminId = 'HtDyb4IYJLObM7yXffmehXSxeBJ3';
@@ -189,6 +190,8 @@ const Tables = () => {
               placeholder="Edbert Lim"
             />
           </Form.Group>
+          <TimePicker onChange={setSelectedTime} value={selectedTime} />
+          {/*
           <Form.Group>
             <Form.Label>Waktu Kedatangan</Form.Label>
             <Form.Control
@@ -197,6 +200,7 @@ const Tables = () => {
               onChange={(e) => setSelectedTime(e.target.value)}
             />
           </Form.Group>
+          */}
         </Form>
       </Modal.Body>
       <Modal.Footer>
