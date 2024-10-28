@@ -1,10 +1,8 @@
 import axios from 'axios';
-import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
 import { Container, ListGroup, Modal, Button, Form } from 'react-bootstrap';
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from 'react-router-dom';
-import backend from '../../data/backend.json'
+import backend from '../../data/backend'
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -12,56 +10,55 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { toast } from 'react-toastify';
 import { TimePicker } from 'react-time-picker';
 
-const Card = ({ no, booked, customer_name, book_time, handleBooking, handleCancelBooking, tableUid, currentUserUid }) => {
-  const adminId = 'HtDyb4IYJLObM7yXffmehXSxeBJ3';
+const Card = ({ no, booked, customer_name, book_time, handleBooking, handleCancelBooking, tableUid, currentUserUid, isUserAdmin }) => {
   const isUserBooked = booked && tableUid === currentUserUid; // Check if the user has booked this table
-  const isUserAdmin = adminId === currentUserUid;
 
-  return(
-  <div className="col">
-    <div className="card mb-4 rounded-3 shadow-sm">
-      <div className={`card-header py-3 ${(booked) ? 'text-bg-success' : 'text-bg-warning'}`}>
-        <h4 className="my-0 fw-bold">Meja. {no}</h4>
-      </div>
-
-      <div className="card-body">
-        <div style={{minHeight: '100px', display: 'flex', flexFlow: 'column', justifyContent: 'center'}}>
-        {booked 
-          ? 
-          <ListGroup style={{textAlign: "left"}} className='mb-3 '>
-            <ListGroup.Item><AccountCircleIcon/> {customer_name}</ListGroup.Item>
-            <ListGroup.Item><AccessTimeIcon/> {book_time}</ListGroup.Item>
-          </ListGroup>
-          :
-          <h1 className="card-title pricing-card-title fst-italic text-black-50">Tidak Dibuku</h1>
-        }
+  return (
+    <div className="col">
+      <div className="card mb-4 rounded-3 shadow-sm">
+        <div className={`card-header py-3 ${(booked) ? 'text-bg-success' : 'text-bg-warning'}`}>
+          <h4 className="my-0 fw-bold">Meja. {no}</h4>
         </div>
 
-        <button
-          onClick={isUserBooked ? handleCancelBooking : (!booked ? handleBooking: null)} 
-          className={`
-            w-100 btn btn-lg mb-3
-            ${(isUserBooked) ? 'text-bg-primary' : (booked ? 'text-bg-success' : 'text-bg-warning')}
-          `}
-        >
-          {isUserBooked ? "Batal Pesan" : (booked ? "Telah Dipesan" : "Pesan Meja")}
-        </button>
-        {(isUserAdmin) &&
-        <button
-          onClick={booked ? handleCancelBooking : handleBooking} 
-          className={`w-100 btn btn-lg text-bg-primary`}
-        >
-          {booked ? "Tutup Meja" : "Tandai Meja telah Dibuku"}
-        </button>
-        }
+        <div className="card-body">
+          <div style={{ minHeight: '100px', display: 'flex', flexFlow: 'column', justifyContent: 'center' }}>
+            {booked 
+              ? 
+              <ListGroup style={{ textAlign: "left" }} className='mb-3'>
+                <ListGroup.Item><AccountCircleIcon /> {customer_name}</ListGroup.Item>
+                <ListGroup.Item><AccessTimeIcon /> {book_time}</ListGroup.Item>
+              </ListGroup>
+              :
+              <h1 className="card-title pricing-card-title fst-italic text-black-50">Tidak Dibuku</h1>
+            }
+          </div>
+
+          <button
+            onClick={isUserBooked ? handleCancelBooking : (!booked ? handleBooking : null)} 
+            className={`
+              w-100 btn btn-lg mb-3
+              ${(isUserBooked) ? 'text-bg-primary' : (booked ? 'text-bg-success' : 'text-bg-warning')}
+            `}
+          >
+            {isUserBooked ? "Batal Pesan" : (booked ? "Telah Dipesan" : "Pesan Meja")}
+          </button>
+
+          {isUserAdmin &&
+            <button
+              onClick={booked ? handleCancelBooking : handleBooking} 
+              className="w-100 btn btn-lg text-bg-primary"
+              style={{ fontSize: '16px' }}
+            >
+              {booked ? "Tutup Meja" : "Tandai Meja telah Dibuku"}
+            </button>
+          }
+        </div>
       </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-const Tables = () => {
-  const [user] = useAuthState(auth);
+const Tables = ({ user, isAdmin }) => {
   const [table, setTable] = useState([]);
   const [showCancelModal, setShowCancelModal ] = useState(false);
   const [showTimeModal, setShowTimeModal] = useState(false);
@@ -70,6 +67,8 @@ const Tables = () => {
   const [selectedTime, setSelectedTime] = useState('');
   const navigate = useNavigate();
   const url = backend.url;
+
+  const currentUserUid = user ? user.uid : null;
 
   const fetchTables = async () => {
     try {
@@ -157,17 +156,18 @@ const Tables = () => {
     </Button>
     <Container className="row row-cols-1 row-cols-xl-3 mb-3 ">
     {table.map((item) => (
-    <Card 
-      key={item.id} 
-      no={item.id} 
-      booked={item.booked} 
-      customer_name={item.customer_name} 
-      book_time={item.book_time}
-      handleBooking={() => handleBooking(item.id)}
-      handleCancelBooking={() => handleCancelBooking(item.id)}
-      tableUid={item.uid}
-      currentUserUid={user ? user.uid : null}
-    />
+      <Card 
+        key={item.id} 
+        no={item.id} 
+        booked={item.booked} 
+        customer_name={item.customer_name} 
+        book_time={item.book_time}
+        handleBooking={() => handleBooking(item.id)}
+        handleCancelBooking={() => handleCancelBooking(item.id)}
+        tableUid={item.uid}
+        currentUserUid={currentUserUid}
+        isUserAdmin={isAdmin}
+      />
     ))}
     </Container>
 
@@ -199,6 +199,8 @@ const Tables = () => {
         </Button>
       </Modal.Footer>
     </Modal>
+
+    {/*Inform user they need to Login to book table  */}
 
     {/*Cancel Booking Modal */}
     <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)}>
