@@ -16,7 +16,7 @@ import Error from './pages/Other/404';
 
 function App() {
   const [user] = useAuthState(auth);
-  const adminId = 'HtDyb4IYJLObM7yXffmehXSxeBJ3';
+  const adminId = 'QiNSqaxF5WaT9KBXuXJMAHmkwtN2';
   const isAdmin = user?.uid === adminId;
   console.log(user?.uid);
 
