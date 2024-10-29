@@ -6,7 +6,7 @@ $primary-color: #fd8200;
   background-color: $primary-color !important;
   border-color: $primary-color !important;
   &:hover {
-    filter: brightness(0.8);
+    filter: brightness(0.9);
   }
 }
 
@@ -14,6 +14,7 @@ $primary-color: #fd8200;
 .btn-outline-primary:focus,
 .btn-outline-primary:active {
   border: 2px solid $primary-color !important;
+  background-color: white !important;
   color: $primary-color !important;
   &:hover {
     background-color: $primary-color !important;

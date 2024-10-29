@@ -1,3 +1,5 @@
+@import '../../global.scss';
+
 .homepage {
     text-align: center;
     padding: 100px 40px;
@@ -9,5 +11,9 @@
         font-size: 18px; 
         color: '#6c757d'; 
         
+    }
+    .primary-outline {
+        border: $primary-color;
+        color: $primary-color;
     }
 }

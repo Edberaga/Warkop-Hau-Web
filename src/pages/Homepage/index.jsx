@@ -10,8 +10,8 @@ const Home = () => {
         Discover the authentic flavors of Southeast Asia right here at Hau Bofet dan Warung Kopi. Enjoy our curated dishes, refreshing drinks, and warm atmosphere. Let us bring you a taste of home.
       </p>
       <div style={{ display: 'flex', width:'100%', gap:'10px' }}>
-        <Button className="w-50 ">Lihat Menu</Button>
-        <Button className="w-50 btn-outline-primary">Buku Meja</Button>
+        <Button className="w-50" href="/menu">Lihat Menu</Button>
+        <Button className="w-50 btn-outline-primary" href="/buku-meja">Buku Meja</Button>
       </div>
     </Container>
     
