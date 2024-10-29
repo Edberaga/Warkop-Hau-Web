@@ -19,7 +19,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("Succesfully Logined")
-      navigate('/');
+      navigate('/buku-meja');
       // User is signed in, redirect or close login modal
     } catch (error) {
       setError("Email or password is incorrect");

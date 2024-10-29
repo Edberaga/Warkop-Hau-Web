@@ -1,65 +1,17 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Container, ListGroup, Modal, Button, Form } from 'react-bootstrap';
+import { Container, Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import backend from '../../data/backend'
-
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 import { TimePicker } from 'react-time-picker';
-
-const Card = ({ no, booked, customer_name, book_time, handleBooking, handleCancelBooking, tableUid, currentUserUid, isUserAdmin }) => {
-  const isUserBooked = booked && tableUid === currentUserUid; // Check if the user has booked this table
-
-  return (
-    <div className="col">
-      <div className="card mb-4 rounded-3 shadow-sm">
-        <div className={`card-header py-3 ${(booked) ? 'text-bg-success' : 'text-bg-warning'}`}>
-          <h4 className="my-0 fw-bold">Meja. {no}</h4>
-        </div>
-
-        <div className="card-body">
-          <div style={{ minHeight: '100px', display: 'flex', flexFlow: 'column', justifyContent: 'center' }}>
-            {booked 
-              ? 
-              <ListGroup style={{ textAlign: "left" }} className='mb-3'>
-                <ListGroup.Item><AccountCircleIcon /> {customer_name}</ListGroup.Item>
-                <ListGroup.Item><AccessTimeIcon /> {book_time}</ListGroup.Item>
-              </ListGroup>
-              :
-              <h1 className="card-title pricing-card-title fst-italic text-black-50">Tidak Dibuku</h1>
-            }
-          </div>
-
-          <button
-            onClick={isUserBooked ? handleCancelBooking : (!booked ? handleBooking : null)} 
-            className={`
-              w-100 btn btn-lg mb-3
-              ${(isUserBooked) ? 'text-bg-primary' : (booked ? 'text-bg-success' : 'text-bg-warning')}
-            `}
-          >
-            {isUserBooked ? "Batal Pesan" : (booked ? "Telah Dipesan" : "Pesan Meja")}
-          </button>
-
-          {isUserAdmin &&
-            <button
-              onClick={booked ? handleCancelBooking : handleBooking} 
-              className="w-100 btn btn-lg text-bg-primary"
-              style={{ fontSize: '16px' }}
-            >
-              {booked ? "Tutup Meja" : "Tandai Meja telah Dibuku"}
-            </button>
-          }
-        </div>
-      </div>
-    </div>
-  );
-};
+import TableCard from '../../components/tableCard/TableCard';
 
 const Tables = ({ user, isAdmin }) => {
   const [table, setTable] = useState([]);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [showCancelModal, setShowCancelModal ] = useState(false);
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [selectedTableId, setSelectedTableId] = useState(null);
@@ -82,7 +34,7 @@ const Tables = ({ user, isAdmin }) => {
 
   const handleBooking = (tableId) => {
     if (!user) {
-      navigate("/login"); // Redirect to login page if user is not logged in
+      setShowLoginModal(true);
       return;
     }
     setCustomerName(user.displayName);
@@ -142,7 +94,6 @@ const Tables = ({ user, isAdmin }) => {
 
   return (
   <section className='container py-3 text-center d-flex flex-column align-items-center'>
-    {(user) && <h1>Hello, {user.displayName}</h1>}
     <Button 
       className='btn btn-success btn-lg my-5' 
       style={{
@@ -155,9 +106,14 @@ const Tables = ({ user, isAdmin }) => {
       <WhatsAppIcon/> Pesan Melalui WhatsApp
     </Button>
     <Container className="row row-cols-1 row-cols-xl-3 mb-3 ">
-    {table.map((item) => (
-      <Card 
-        key={item.id} 
+    {table.map((item , index) => (
+    <motion.div 
+      key={item.id}
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: 'spring', delay: index * 0.18 }}
+    >
+      <TableCard
         no={item.id} 
         booked={item.booked} 
         customer_name={item.customer_name} 
@@ -168,6 +124,8 @@ const Tables = ({ user, isAdmin }) => {
         currentUserUid={currentUserUid}
         isUserAdmin={isAdmin}
       />
+    </motion.div>
+    
     ))}
     </Container>
 
@@ -200,7 +158,23 @@ const Tables = ({ user, isAdmin }) => {
       </Modal.Footer>
     </Modal>
 
-    {/*Inform user they need to Login to book table  */}
+    {/* Login Required Modal */}
+    <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>Login Required</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        Please log in to book a table.
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowLoginModal(false)}>
+          Cancel
+        </Button>
+        <Button variant="primary" onClick={() => navigate("/login")}>
+          Login
+        </Button>
+      </Modal.Footer>
+    </Modal>
 
     {/*Cancel Booking Modal */}
     <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)}>

@@ -1,0 +1,22 @@
+$primary-color: #fd8200;
+
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+  &:hover {
+    filter: brightness(0.8);
+  }
+}
+
+.btn-outline-primary,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  border: 2px solid $primary-color !important;
+  color: $primary-color !important;
+  &:hover {
+    background-color: $primary-color !important;
+    color: white !important;
+  }
+}

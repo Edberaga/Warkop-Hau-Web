@@ -35,7 +35,7 @@ const Register = () => {
       });
 
       toast.success(`User ${username} Successfully Registered`);
-      navigate('/');
+      navigate('/buku-meja');
     } catch (error) {
       setError("Registration failed. Please try again.");
       console.log(error);
