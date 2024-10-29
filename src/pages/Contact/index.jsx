@@ -5,6 +5,7 @@ import emailjs from '@emailjs/browser';
 import con from '../../data/contact.json';
 import map from '../../assets/images/map.webp';
 import './styles.scss';
+import { toast } from 'react-toastify';
 
 const Contact = () => {
   const form = useRef();
@@ -13,10 +14,10 @@ const Contact = () => {
     emailjs.sendForm('service_4jw6323', 'template_2lbsywe', form.current, '62rcHLvMvFBxOexNN')
     .then((result) => {
         console.log(result.text);
-        alert('Mail sent succesfully');
+        toast.success('Mail sent succesfully');
     }, (error) => {
         console.log(error.text);
-        alert('Mail sent error...');
+        toast.error('Mail sent error...');
     });
   };
 
