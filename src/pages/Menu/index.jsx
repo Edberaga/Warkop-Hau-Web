@@ -121,7 +121,7 @@ const Menu = ({ isAdmin }) => {
             <Card.Body>
               <Card.Title style={{ fontWeight: '600', textTransform: 'capitalize' }}>{item.nama}</Card.Title>
               <Card.Text>
-                <strong>Rp.</strong> {item.harga[0]}{item.harga[1]}<span style={{ fontSize: '12px' }}>.000</span>
+                <strong>Rp.</strong> {item.harga}<span style={{ fontSize: '12px' }}></span>
               </Card.Text>
             </Card.Body>
           </Card>
