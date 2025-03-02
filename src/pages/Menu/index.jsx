@@ -112,9 +112,9 @@ const Menu = ({ isAdmin }) => {
         {menuItems.map((item, index) => (
         <Col key={item.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
         <motion.div 
-          initial={{ scale: 0, rotate: 180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: 'spring', delay: index * 0.3 }}
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', delay: index * 0.2 }}
         >
           <Card className="h-100 shadow-sm">
             <Card.Img variant="top" src={item.img} alt={item.nama} style={{ height: '200px', objectFit: 'cover' }} />
